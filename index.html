@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Entry</title>
+</head>
+<body>
+    <h2>Enter Your Data</h2>
+    <form action="/submit" method="POST">
+        <label>Name: <input type="text" name="name" required></label><br>
+        <label>Age: <input type="number" name="age" required></label><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Submitted Data</h2>
+    <button onclick="fetchData()">Show Data</button>
+    <ul id="dataList"></ul>
+
+    <script>
+        function fetchData() {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('dataList');
+                    list.innerHTML = '';
+                    data.forEach(entry => {
+                        list.innerHTML += `<li>${entry.name}, ${entry.age} years old</li>`;
+                    });
+                });
+        }
+    </script>
+</body>
+</html>
